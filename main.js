@@ -33,7 +33,7 @@ class PictureSelect extends React.Component {
     super(props);
     this.state = {
       selectAll: false,
-      selectedIds: [],
+      selectedIds: props.value,
     };
   }
 
