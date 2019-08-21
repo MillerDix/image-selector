@@ -56,7 +56,15 @@ class PictureSelect extends React.Component {
       }
       prev.selectedIds.splice(id);
 
-      this.props.selectedIdsOnChange(prev.selectedIds);
+      // check if all
+      if(prev.selectedIds.length === this.props.pictures.length) {
+        prev.selectAll = true;
+      } else {
+        prev.selectAll = false;
+      }
+
+      // execute 
+      this.props.onChange(prev.selectedIds);
       return prev;
     });
 
@@ -65,13 +73,14 @@ class PictureSelect extends React.Component {
 
   selectAll = () => {
     if(this.state.selectAll) {
-      this.setState({ selectedIds: [] });
+      this.setState({ selectedIds: [], selectAll: false });
     }
 
     const allIds = this.props.pictures.reduce((prev, cur) => {
       return cur.push(prev.id);
-    }, [])
-    this.setState({ selectedIds: allIds });
+    }, []);
+
+    this.setState({ selectedIds: allIds, selectAll: true });
   }
 
   renderPics = pictures => {
